@@ -1,24 +1,35 @@
 import React, { useState } from "react";
 import css from "./Tags.module.css"
+import {MyTimer} from "../Timer/Timer";
 
 export const Tags = props => {
 
-
-
-    const [tags, setTags] = useState([]);
+    let [tags, setTags] = useState([]);
     const [points, setPoints] = useState(0);
+    const [isExpired, setIsExpired] = useState(false);
+    const [isRestarting, setIsRestarting] = useState(false);
+    const [found, setFound] = useState(props.found);
 
     const removeTags = indexToRemove => {
         setTags([...tags.filter((_, index) => index !== indexToRemove)]);
     };
 
     const addTags = event => {
-        if (event.target.value !== "") {
-            setPoints(points+renderSwitch(event.target.value));
+        if (event.target.value !== "" && !tags.includes(event.target.value.toUpperCase())) {
+            setPoints(points+isValidWord(event.target.value.toUpperCase()));
             setTags([...tags, event.target.value.toUpperCase()]);
             event.target.value = "";
         }
     };
+
+    //checks if it is valid word before it adds points
+    const isValidWord = (word) => {
+        if (found.includes(word)) {
+            console.log(word)
+            return renderSwitch(word);
+        } else return 0;
+    }
+
     // Word Points
     let renderSwitch = (word) => {
         switch(word.length) {
@@ -39,9 +50,27 @@ export const Tags = props => {
         }
     }
 
+    if (isRestarting){
+        setTags([]);
+        setIsRestarting(false);
+        setPoints(0);
+        props.getTags(tags);
+    }
+
+    if (isExpired){
+        props.getTags(tags);
+    }
+
+    //For Timer - Sets Timer Time
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + 180); // 10 minutes timer
 
     return (
         <div>
+            <div>
+                <MyTimer expiryTimestamp={time} changeExpired={isExpired => setIsExpired(isExpired)} restarting={isRestarting => setIsRestarting(isRestarting)} />
+            </div>
+
             <ul className={css.tagContainer}>
                 {tags.map((tag, index) => (
                     <li key={index} className={css.tag}>
@@ -55,13 +84,27 @@ export const Tags = props => {
                 ))}
             </ul>
 
-            <input
-                type="text"
-                className={css.tagInput}
-                onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
-                placeholder="Press enter to add Word..."
-            />
-            <p>Points: {points}</p>
+            {
+                isExpired ? (
+                    <div>
+                        <h1>Times Up!</h1>
+                        <p>Points: {points}</p>
+                    </div>
+                    ) : (
+                        <input
+                        type="text"
+                        className={css.tagInput}
+                        onKeyUp={event => {
+                            if((event.target.value.length < 3 || event.target.value.length > 16)){
+                                return null;
+                            } else if(event.key === "Enter") {
+                                addTags(event);
+                            }
+                        }}
+                        placeholder="Press enter to add Word..."
+                    />)
+            }
+
         </div>
     );
 };

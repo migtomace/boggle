@@ -2,8 +2,9 @@
     background: #ffffff;
     border-radius: 5px;
     margin: 1em auto;
-    height: 100px;
-    width: 50%;
+    height: 200px;
+    width: 70%;
+    overflow-y: auto;
 }
 .tag {
     position: relative;

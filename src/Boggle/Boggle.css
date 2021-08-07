@@ -21,8 +21,6 @@ ul {
     background: #ffffff;
 }
 section {
-    height: 90vh;
-    overflow-y: auto;
     background: #23a1ba;
     padding: 1em;
     margin: 2vh 2vw;

@@ -4,7 +4,6 @@ import words from './helpers/words.json'
 import findWords from "./helpers/findWords";
 import './Boggle.css'
 import Tags from './Tags/Tags';
-import Timer, {MyTimer} from "./Timer/Timer"
 
 //uppercase words
 const L = words.map(w => w.toUpperCase());
@@ -29,30 +28,37 @@ let renderSwitch = (word) => {
     }
 }
 
-
 export const Boggle = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
+    const [tags, setTags] = useState([]);
     let found = findWords(matrix, L).sort();
-
-    //For Timer - Sets Timer Time
-    const time = new Date();
-    time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
     return (
         <div>
             <section id="Matrix">
                 <input type="button" onClick={() => {window.location.reload()}} value="Reload"/>
                 <h1>Boggle</h1>
+                <h3>Rules</h3>
+                <ul>
+                    <li>Each word must be at least three letters</li>
+                    <li>Words will be counted once, regardless of meaning</li>
+                    <li>No repeat words</li>
+                    <li>Both singular and plural forms are aloud</li>
+                </ul>
+
+                <h3>Points</h3>
+                <em>Points are dependant upon word length:</em>
+                <ul>
+                    <li>3 letter = 1 point</li>
+                    <li>4 letter = 1 point</li>
+                    <li>5 letter = 2 points</li>
+                    <li>6 letter = 3 points</li>
+                    <li>7 letter = 5 points</li>
+                    <li>8+ letter = 11 points</li>
+                </ul>
                 <table>
-                    <thead>
-                    <tr>
-                        {matrix[0].map((item, index) => {
-                            return <td>{item}</td>;
-                        })}
-                    </tr>
-                    </thead>
                     <tbody>
-                    {matrix.slice(1, matrix.length).map((item, index) => {
+                    {matrix.map((item, index) => {
                         return (
                             <tr>
                                 <td>{item[0]}</td>
@@ -64,37 +70,52 @@ export const Boggle = () => {
                     })}
                     </tbody>
                 </table>
-                <Tags/>
+                <Tags getTags={tags => setTags(tags)} found={found}/>
                 <div>
-                    <MyTimer expiryTimestamp={time} />
+                    {tags.length ? (<h2>Your Valid Words</h2>) : null}
+
+                    {tags.map(tag => {
+                        if (found.includes(tag)){
+                            return (
+                                <div className="word">
+                                    <h6>{tag} </h6>
+                                    <p className="points">
+                                        {renderSwitch(tag)} + points</p>
+                                </div>)
+                        } else return null;
+
+                    })}
                 </div>
             </section>
 
 
             <br/>
 
-            <section>
-                <h1>Valid words:</h1>
+            {tags.length ? (
+                <section>
+                <h1>All Valid words:</h1>
                 <input type="text" id="search" placeholder="Search..." style={{textTransform: "uppercase"}} onChange={(event) => {
-                    setSearchTerm(event.target.value.toUpperCase());
-                }}/>
+                setSearchTerm(event.target.value.toUpperCase());
+            }}/>
                 <p>
-                    {found.filter((val) => {
-                        if(searchTerm == "") {
-                            return val;
-                        } else if (val.includes(searchTerm)){
-                            return val;
-                        };
-                    }).map(item => {
-                    return (
-                        <div className="word">
-                            <h6>{item} </h6>
-                            <p className="points">
-                                {renderSwitch(item)} + points</p>
-                        </div>)
-                })}
+            {found.filter((val) => {
+                if(searchTerm == "") {
+                return val;
+            } else if (val.includes(searchTerm)){
+                return val;
+            };
+            }).map(item => {
+                return (
+                <div className="word">
+                <h6>{item} </h6>
+                <p className="points">
+            {renderSwitch(item)} + points</p>
+                </div>)
+            })}
                 </p>
-            </section>
+                </section>
+                ) : null}
+
 
         </div>
     )
