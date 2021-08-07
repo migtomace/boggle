@@ -20,7 +20,7 @@ const findWords = (matrix, L) => {
 
     //Depth first search
     const dfs = (row, col, trie) => {
-        if (row < 0 || col < 0 || row > matrix.length - 1 || col > matrix[0].length - 1) return; // Out of bounds guard
+        if (row < 0 || col < 0 || row > matrix.length - 1 || col > matrix[0].length - 1) return; // Checks the boundaries before preceding
         const char = matrix[row][col];
         trie = trie.children[char];
         if (char === '#' || !trie) return;
