@@ -9,12 +9,13 @@ const L = words.map(w => w.toUpperCase());
 export const Boggle = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
-    let found = findWords(matrix, L);
+    const [filterTerm, setFilterTerm] = useState("");
+    let found = findWords(matrix, L).sort();
     return (
         <div>
             <section id="Matrix">
                 <input type="button" onClick={() => {window.location.reload()}} value="Reload"/>
-                <h1>Matrix</h1>
+                <h1>Boggle</h1>
                 <table>
                     <thead>
                     <tr>
@@ -42,36 +43,22 @@ export const Boggle = () => {
             <br/>
 
             <section>
-                <h1>Found these words:</h1>
+                <h1>Valid words:</h1>
+                <input type="text" id="search" placeholder="Search..." style={{textTransform: "uppercase"}} onChange={(event) => {
+                    setSearchTerm(event.target.value.toUpperCase());
+                }}/>
                 <p>
-                    {found.map(item => {
+                    {found.filter((val) => {
+                        if(searchTerm == "") {
+                            return val;
+                        } else if (val.includes(searchTerm)){
+                            return val;
+                        };
+                    }).map(item => {
                     return <div className="word" style={item.length < 3 ? {background: "red"} : {background: "green"}}> {item} </div>
                 })}
                 </p>
             </section>
-
-
-            <br/>
-
-            <section>
-                <h1>Dictionary</h1>
-                <input type="text" id="search" placeholder="Search..." style={{textTransform: "uppercase"}} onChange={(event) => {
-                    setSearchTerm(event.target.value.toUpperCase());
-                }}/>
-                <div>
-                    {L.filter((val) => {
-                        if(searchTerm == "") {
-                            return "";
-                        } else if (val.includes(searchTerm)){
-                            return val;
-                        };
-
-                    }).map(filteredWord => {
-                        return <div className="word"> {filteredWord} </div>
-                    })}
-                </div>
-            </section>
-
 
         </div>
     )
