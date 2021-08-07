@@ -6,6 +6,25 @@ import './Boggle.css'
 
 const L = words.map(w => w.toUpperCase());
 
+let renderSwitch = (word) => {
+    switch(word.length) {
+        case 3:
+            return 1;
+        case 4:
+            return 1;
+        case 5:
+            return 2;
+        case 6:
+            return 3;
+        case 7:
+            return 5;
+        case 8:
+            return 11;
+        default: //greater than 8
+            return 11;
+    }
+}
+
 export const Boggle = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -55,7 +74,12 @@ export const Boggle = () => {
                             return val;
                         };
                     }).map(item => {
-                    return <div className="word" style={item.length < 3 ? {background: "red"} : {background: "green"}}> {item} </div>
+                    return (
+                        <div className="word">
+                            <h6>{item} </h6>
+                            <p className="points">
+                                {renderSwitch(item)} + points</p>
+                        </div>)
                 })}
                 </p>
             </section>
