@@ -1,96 +1,77 @@
-import React from 'react';
-import matrix from './matrix';
-import words from './words.json'
+import React, { useState } from 'react';
+import matrix from './helpers/matrix';
+import words from './helpers/words.json'
+import findWords from "./helpers/findWords";
+import './Boggle.css'
 
-const L = words;
-
-const foundWords = [];
-
-// A recursive function to print all words present on boggle
-const findWordsUtil = (matrix, visited, i, j, word) =>
-{
-
-    // Mark current cell as visited and
-    // append current character to str
-    visited[i][j] = true;
-    word = word + matrix[i][j];
-
-    for (let i = 0; i < L.length; i++){
-        if (L[i] === word) {
-            foundWords.push(word);
-            L.splice(i, 1);
-        }
-    }
-
-
-    // Traverse 8 adjacent cells of boggle[i,j]
-    for (let row = i - 1; row <= i + 1 && row < 4; row++)
-        for (let col = j - 1; col <= j + 1 && col < 4; col++)
-            if (row >= 0 && col >= 0 && !visited[row][col])
-                findWordsUtil(matrix, visited, row, col, word);
-
-    // Erase current character from string and
-    // mark visited of current cell as false
-    visited[i][j] = false;
-}
-
-// Prints all words present in dictionary.
-const findWords = (matrix) =>
-{
-    // Mark all characters as not visited
-    let visited = Array.from(Array(4), () => new Array(4).fill(0));
-
-    // Initialize current string
-    let word = "";
-
-    // Consider every character and look for all words
-    // starting with this character
-    for (let i = 0; i < 4; i++) //rows
-        for (let j = 0; j < 4; j++) //cols
-            findWordsUtil(matrix, visited, i, j, word);
-}
-
+const L = words.map(w => w.toUpperCase());
 
 export const Boggle = () => {
 
-    findWords(matrix);
+    const [searchTerm, setSearchTerm] = useState("");
+    let found = findWords(matrix, L);
 
     return (
         <div>
-            <h1>Matrix</h1>
-            <table className=matrix>
-                <thead>
-                <tr>
-                    {matrix[0].map((item, index) => {
-                        return <td>{item}</td>;
+            <section id="Matrix">
+                <input type="button" onClick={() => {window.location.reload()}} value="Reload"/>
+                <h1>Matrix</h1>
+                <table>
+                    <thead>
+                    <tr>
+                        {matrix[0].map((item, index) => {
+                            return <td>{item}</td>;
+                        })}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {matrix.slice(1, matrix.length).map((item, index) => {
+                        return (
+                            <tr>
+                                <td>{item[0]}</td>
+                                <td>{item[1]}</td>
+                                <td>{item[2]}</td>
+                                <td>{item[3]}</td>
+                            </tr>
+                        );
                     })}
-                </tr>
-                </thead>
-                <tbody>
-                {matrix.slice(1, matrix.length).map((item, index) => {
-                    return (
-                        <tr>
-                            <td>{item[0]}</td>
-                            <td>{item[1]}</td>
-                            <td>{item[2]}</td>
-                            <td>{item[3]}</td>
-                        </tr>
-                    );
-                })}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </section>
+
 
             <br/>
-            <h1>Dictionary</h1>
-            <ul>
-                {L.map((item, index) => {
-                    return <li> {item} </li>
+
+            <section>
+                <h1>Found these words:</h1>
+                <p>
+                    {found.map(item => {
+                    return <div className="word" style={item.length < 3 ? {background: "red"} : {background: "green"}}> {item} </div>
                 })}
-            </ul>
+                </p>
+            </section>
+
 
             <br/>
-            <h1>Found these words:</h1>
-            <p>{foundWords.join(", ")}</p>
+
+            <section>
+                <h1>Dictionary</h1>
+                <input type="text" id="search" placeholder="Search..." style={{textTransform: "uppercase"}} onChange={(event) => {
+                    setSearchTerm(event.target.value.toUpperCase());
+                }}/>
+                <div>
+                    {L.filter((val) => {
+                        if(searchTerm == "") {
+                            return val;
+                        } else if (val.includes(searchTerm)){
+                            return val;
+                        };
+
+                    }).map(filteredWord => {
+                        return <div className="word"> {filteredWord} </div>
+                    })}
+                </div>
+            </section>
 
 
         </div>

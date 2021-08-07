@@ -1,11 +1,10 @@
-import { Boggle } from './Boggle/Boggle';
-import './App.css';
+import { Boggle } from '../Boggle/Boggle';
+import './App.css'
 
-function App() {
+const App = () => {
 
   return (
     <div className="App">
-        <input onClick={() => {window.location.reload()}} value="Reload"/>
         <Boggle />
     </div>
   );
