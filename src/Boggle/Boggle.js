@@ -3,9 +3,12 @@ import matrix from './helpers/matrix';
 import words from './helpers/words.json'
 import findWords from "./helpers/findWords";
 import './Boggle.css'
+import Tags from './Tags/Tags';
 
+//uppercase words
 const L = words.map(w => w.toUpperCase());
 
+// Word Points
 let renderSwitch = (word) => {
     switch(word.length) {
         case 3:
@@ -25,10 +28,13 @@ let renderSwitch = (word) => {
     }
 }
 
+
 export const Boggle = () => {
 
+    const selectedTags = tags => {
+        console.log(tags);
+    };
     const [searchTerm, setSearchTerm] = useState("");
-    const [filterTerm, setFilterTerm] = useState("");
     let found = findWords(matrix, L).sort();
     return (
         <div>
@@ -56,6 +62,7 @@ export const Boggle = () => {
                     })}
                     </tbody>
                 </table>
+                <Tags selectedTags={selectedTags} tags={[]}/>
             </section>
 
 

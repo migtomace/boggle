@@ -1,7 +1,10 @@
+h1 {
+    font-size: 2em;
+}
 table {
     margin: 0 auto;
     background: #ffffff;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 table, th, td {
     border: 1px solid #000000;
