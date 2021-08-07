@@ -10,7 +10,6 @@ export const Boggle = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
     let found = findWords(matrix, L);
-
     return (
         <div>
             <section id="Matrix">
@@ -62,7 +61,7 @@ export const Boggle = () => {
                 <div>
                     {L.filter((val) => {
                         if(searchTerm == "") {
-                            return val;
+                            return "";
                         } else if (val.includes(searchTerm)){
                             return val;
                         };
