@@ -4,6 +4,7 @@ import words from './helpers/words.json'
 import findWords from "./helpers/findWords";
 import './Boggle.css'
 import Tags from './Tags/Tags';
+import Timer, {MyTimer} from "./Timer/Timer"
 
 //uppercase words
 const L = words.map(w => w.toUpperCase());
@@ -31,11 +32,12 @@ let renderSwitch = (word) => {
 
 export const Boggle = () => {
 
-    const selectedTags = tags => {
-        console.log(tags);
-    };
     const [searchTerm, setSearchTerm] = useState("");
     let found = findWords(matrix, L).sort();
+
+    //For Timer - Sets Timer Time
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
     return (
         <div>
             <section id="Matrix">
@@ -62,7 +64,10 @@ export const Boggle = () => {
                     })}
                     </tbody>
                 </table>
-                <Tags selectedTags={selectedTags} tags={[]}/>
+                <Tags/>
+                <div>
+                    <MyTimer expiryTimestamp={time} />
+                </div>
             </section>
 
 

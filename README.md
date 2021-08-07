@@ -37,3 +37,5 @@ The Data Structures used in the findWords program are Trie and Depth First Searc
 - Much faster solution (Horizontal & Vertical): https://leetcode.com/problems/word-search-ii/discuss/1002899/Simple-JavaScript-solution-runtime-faster-than-99.25
 
 - My Favorite solution (Horizontal & Vertical): https://leetcode.com/problems/word-search-ii/discuss/1216646/JavaScript-Solution-using-Trie-and-Backtracking
+
+- Timer: https://www.npmjs.com/package/react-timer-hook
