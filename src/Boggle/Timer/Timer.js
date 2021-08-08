@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTimer } from 'react-timer-hook';
+import "./Timer.module.css"
 
 export const MyTimer = ({ expiryTimestamp, changeExpired, restarting }) => {
 

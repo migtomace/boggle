@@ -1,0 +1,8 @@
+button {
+    padding: 1em;
+    font-size: 1em;
+}
+
+button:hover {
+    background: dimgray;
+}
