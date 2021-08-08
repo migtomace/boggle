@@ -93,7 +93,7 @@ export const Boggle = () => {
 
             {tags.length ? (
                 <section>
-                <h1>All Valid words:</h1>
+                <h1>All Valid Words:</h1>
                 <input type="text" id="search" placeholder="Search..." style={{textTransform: "uppercase"}} onChange={(event) => {
                 setSearchTerm(event.target.value.toUpperCase());
             }}/>

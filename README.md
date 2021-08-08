@@ -39,3 +39,5 @@ The Data Structures used in the findWords program are Trie and Depth First Searc
 - My Favorite solution (Horizontal & Vertical): https://leetcode.com/problems/word-search-ii/discuss/1216646/JavaScript-Solution-using-Trie-and-Backtracking
 
 - Timer: https://www.npmjs.com/package/react-timer-hook
+
+- Passing data to Parent Components: https://www.youtube.com/watch?v=UrpNtB61qyo

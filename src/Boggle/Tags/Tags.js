@@ -71,27 +71,14 @@ export const Tags = props => {
                 <MyTimer expiryTimestamp={time} changeExpired={isExpired => setIsExpired(isExpired)} restarting={isRestarting => setIsRestarting(isRestarting)} />
             </div>
 
-            <ul className={css.tagContainer}>
-                {tags.map((tag, index) => (
-                    <li key={index} className={css.tag}>
-                        <span className='tag-title'>{tag}</span>
-                        <span className={css.tagCloseIcon}
-                              onClick={() => removeTags(index)}
-                        >
-                        x
-                    </span>
-                    </li>
-                ))}
-            </ul>
-
             {
                 isExpired ? (
                     <div>
                         <h1>Times Up!</h1>
                         <p>Points: {points}</p>
                     </div>
-                    ) : (
-                        <input
+                ) : (
+                    <input
                         type="text"
                         className={css.tagInput}
                         onKeyUp={event => {
@@ -104,6 +91,19 @@ export const Tags = props => {
                         placeholder="Press enter to add Word..."
                     />)
             }
+
+            <ul className={css.tagContainer}>
+                {tags.map((tag, index) => (
+                    <li key={index} className={css.tag}>
+                        <span>{tag}</span>
+                        <span className={css.tagCloseIcon}
+                              onClick={() => removeTags(index)}
+                        >
+                        x
+                    </span>
+                    </li>
+                ))}
+            </ul>
 
         </div>
     );
