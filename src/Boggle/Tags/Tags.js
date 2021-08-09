@@ -62,9 +62,7 @@ export const Tags = props => {
         props.getTags(tags);
     }
 
-    this.Tags.onChange(()=>{
-        props.getRunning(isRunning);
-    })
+    props.getRunning(isRunning);
 
     //For Timer - Sets Timer Time
     const time = new Date();
