@@ -8,6 +8,7 @@ export const Tags = props => {
     const [points, setPoints] = useState(0);
     const [isExpired, setIsExpired] = useState(false);
     const [isRestarting, setIsRestarting] = useState(false);
+    const [isRunning, setIsRunning] = useState(false);
     const [found, setFound] = useState(props.found);
 
     const removeTags = indexToRemove => {
@@ -61,6 +62,10 @@ export const Tags = props => {
         props.getTags(tags);
     }
 
+    this.Tags.onChange(()=>{
+        props.getRunning(isRunning);
+    })
+
     //For Timer - Sets Timer Time
     const time = new Date();
     time.setSeconds(time.getSeconds() + 180); // 10 minutes timer
@@ -68,7 +73,7 @@ export const Tags = props => {
     return (
         <div>
             <div>
-                <MyTimer expiryTimestamp={time} changeExpired={isExpired => setIsExpired(isExpired)} restarting={isRestarting => setIsRestarting(isRestarting)} />
+                <MyTimer expiryTimestamp={time} changeExpired={isExpired => setIsExpired(isExpired)} getRestarting={isRestarting => setIsRestarting(isRestarting)} getRunning={isRunning => setIsRunning(isRunning)}/>
             </div>
 
             {
@@ -92,18 +97,21 @@ export const Tags = props => {
                     />)
             }
 
-            <ul className={css.tagContainer}>
-                {tags.map((tag, index) => (
-                    <li key={index} className={css.tag}>
-                        <span>{tag}</span>
-                        <span className={css.tagCloseIcon}
-                              onClick={() => removeTags(index)}
-                        >
+            {tags.length ? (
+                <ul className={css.tagContainer}>
+                    {tags.map((tag, index) => (
+                        <li key={index} className={css.tag}>
+                            <span>{tag}</span>
+                            <span className={css.tagCloseIcon}
+                                  onClick={() => removeTags(index)}
+                            >
                         x
                     </span>
-                    </li>
-                ))}
-            </ul>
+                        </li>
+                    ))}
+                </ul>
+            ) : null}
+
 
         </div>
     );

@@ -4,6 +4,7 @@ import words from './helpers/words.json'
 import findWords from "./helpers/findWords";
 import './Boggle.css'
 import Tags from './Tags/Tags';
+import $ from 'jquery';
 
 //uppercase words
 const L = words.map(w => w.toUpperCase());
@@ -32,7 +33,11 @@ export const Boggle = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [tags, setTags] = useState([]);
+    const [isPaused, setPaused] = useState(false);
+    const [isRunning, setRunning] = useState(false);
     let found = findWords(matrix, L).sort();
+
+
     return (
         <div>
             <section id="Matrix">
@@ -61,17 +66,17 @@ export const Boggle = () => {
                     {matrix.map((item, index) => {
                         return (
                             <tr>
-                                <td>{item[0]}</td>
-                                <td>{item[1]}</td>
-                                <td>{item[2]}</td>
-                                <td>{item[3]}</td>
+                                <td><button className="cell">{item[0]}</button></td>
+                                <td><button className="cell">{item[1]}</button></td>
+                                <td><button className="cell">{item[2]}</button></td>
+                                <td><button className="cell">{item[3]}</button></td>
                             </tr>
                         );
                     })}
                     </tbody>
                 </table>
                 <input type="button" onClick={() => {window.location.reload()}} value="New Boggle Board"/>
-                <Tags getTags={tags => setTags(tags)} found={found}/>
+                <Tags getTags={tags => setTags(tags)} getPaused={isPaused => setPaused(isPaused)} found={found} getRunning={isRunning => setRunning(isRunning)}/>
                 <div>
                     {tags.length ? (<h2>Your Valid Words</h2>) : null}
 
