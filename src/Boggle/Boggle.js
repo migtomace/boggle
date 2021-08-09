@@ -36,7 +36,7 @@ export const Boggle = () => {
     return (
         <div>
             <section id="Matrix">
-                <input type="button" onClick={() => {window.location.reload()}} value="Reload"/>
+                <input type="button" onClick={() => {window.location.href = "https://www.miguelacevedo.com"}} value="Home"/>
                 <h1>Boggle</h1>
                 <h3>Rules</h3>
                 <ul>
@@ -70,6 +70,7 @@ export const Boggle = () => {
                     })}
                     </tbody>
                 </table>
+                <input type="button" onClick={() => {window.location.reload()}} value="New Boggle Board"/>
                 <Tags getTags={tags => setTags(tags)} found={found}/>
                 <div>
                     {tags.length ? (<h2>Your Valid Words</h2>) : null}
