@@ -38,7 +38,7 @@ export const MyTimer = ({ expiryTimestamp, changeExpired, getRunning, getRestart
                 changeExpired(false);
             }}>3 Minute</button>
             <button onClick={() => {
-                // Restarts to 3 minutes timer
+                // Restarts to 60 second timer
                 const time = new Date();
                 time.setSeconds(time.getSeconds() + 60);
                 restart(time);
