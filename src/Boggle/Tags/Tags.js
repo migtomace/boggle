@@ -66,7 +66,7 @@ export const Tags = props => {
 
     //For Timer - Sets Timer Time
     const time = new Date();
-    time.setSeconds(time.getSeconds() + 180); // 10 minutes timer
+    time.setSeconds(time.getSeconds() + 60); // 60 second timer
 
     return (
         <div>
