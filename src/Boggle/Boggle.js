@@ -31,10 +31,11 @@ let renderSwitch = (word) => {
 
 export const Boggle = () => {
 
+    const m = matrix(4, 4);
     const [searchTerm, setSearchTerm] = useState("");
     const [tags, setTags] = useState([]);
     const [isRunning, setRunning] = useState(false);
-    let found = findWords(matrix, L).sort();
+    let found = findWords(m, L).sort();
 
 
     return (
@@ -62,17 +63,10 @@ export const Boggle = () => {
                 </ul>
                 <table>
                     <tbody>
-                    {matrix.map((item, index) => {
+                    {m.map((item, index) => {
                         return (
                             <tr>
-                                {/*<td><button className="cell">{item[0]}</button></td>*/}
-                                {/*<td><button className="cell">{item[1]}</button></td>*/}
-                                {/*<td><button className="cell">{item[2]}</button></td>*/}
-                                {/*<td><button className="cell">{item[3]}</button></td>*/}
-                                <td>{item[0]}</td>
-                                <td>{item[1]}</td>
-                                <td>{item[2]}</td>
-                                <td>{item[3]}</td>
+                                {item.map((i) => { return (<td>{i}</td>)})}
                             </tr>
                         );
                     })}
