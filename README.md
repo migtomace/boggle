@@ -1,6 +1,6 @@
 # Boggle Program
 
-This program is a basic remake of the traditional Boggle Game. The User Interface is created using React, while the program itself is coded in ES6.
+This program is a basic remake of the traditional Boggle Game. The User Interface is created using ReactJS, while the program itself is coded in JavaScript.
 
 The Data Structures used in the findWords program are Trie and Depth First Search. 
 
