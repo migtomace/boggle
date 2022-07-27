@@ -72,7 +72,6 @@ export const Boggle = () => {
                     })}
                     </tbody>
                 </table>
-                <input type="button" onClick={() => {window.location.reload()}} value="New Boggle Board"/>
                 <Tags getTags={tags => setTags(tags)} found={found} getRunning={isRunning => setRunning(isRunning)}/>
                 <div>
                     {tags.length ? (<h2>Your Valid Words</h2>) : null}
